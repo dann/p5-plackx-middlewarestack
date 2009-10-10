@@ -74,7 +74,7 @@ __END__
 
 =head1 NAME
 
-PlackX::MiddlewareStack -
+PlackX::MiddlewareStack - forms a complete PSGI application from various middlewares
 
 =head1 SYNOPSIS
 
@@ -82,19 +82,14 @@ PlackX::MiddlewareStack -
 
 =head1 DESCRIPTION
 
-PlackX::MiddlewareStack is
-
+PlackX::MiddlewareStack combines various internal and external middlewares to form a 
+complete PSGI application.
 
 =head1 SOURCE AVAILABILITY
 
 This source is in Github:
 
   http://github.com/dann/
-
-=head1 CONTRIBUTORS
-
-Many thanks to:
-
 
 =head1 AUTHOR
 
