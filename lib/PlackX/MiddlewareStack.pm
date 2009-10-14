@@ -2,7 +2,7 @@ package PlackX::MiddlewareStack;
 use strict;
 use warnings;
 use 5.008_001;
-our $VERSION = '0.01';
+our $VERSION = '0.011';
 
 use Tie::LLHash;
 
