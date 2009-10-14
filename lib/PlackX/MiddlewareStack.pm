@@ -1,7 +1,9 @@
 package PlackX::MiddlewareStack;
 use strict;
 use warnings;
+use 5.008_001;
 our $VERSION = '0.01';
+
 use Tie::LLHash;
 
 sub new {
@@ -78,18 +80,50 @@ PlackX::MiddlewareStack - forms a complete PSGI application from various middlew
 
 =head1 SYNOPSIS
 
-  use PlackX::MiddlewareStack;
+add a middleware:
 
+    use PlackX::MiddlewareStack;
+    my $builder = PlackX::MiddlewareStack->new;
+    $builder->add( 'Plack::Middleware::XFramework', { framework => 'Dog' } );
+    $builder->add('Plack::Middleware::Static');
+    my $psgi_handler =  sub { [ 200, [], ['ok'] ];};
+    my $handler = $builder->to_app($psgi_handler);
+
+insert a middleware after middleware:
+
+    use PlackX::MiddlewareStack;
+    my $builder = PlackX::MiddlewareStack->new;
+    $builder->add( 'Plack::Middleware::XFramework', { framework => 'Dog' } );
+    $builder->add('Plack::Middleware::Static');
+    $builder->insert_after(
+        'Plack::Middleware::Lint' => {},
+        'Plack::Middleware::XFramework'
+    );
+    my $psgi_handler =  sub { [ 200, [], ['ok'] ];};
+    my $handler = $builder->to_app($psgi_handler);
+
+insert a middleware before middleware:
+
+    my $builder = PlackX::MiddlewareStack->new;
+    $builder->add( 'Plack::Middleware::XFramework', { framework => 'Dog' } );
+    $builder->add('Plack::Middleware::Static');
+    $builder->insert_before(
+        'Plack::Middleware::Lint' => {},
+        'Plack::Middleware::XFramework'
+    );
+    my $psgi_handler =  sub { [ 200, [], ['ok'] ];};
+    my $handler = $builder->to_app($psgi_handler);
+ 
 =head1 DESCRIPTION
 
 PlackX::MiddlewareStack combines various internal and external middlewares to form a 
-complete PSGI application.
+complete Plack application.
 
 =head1 SOURCE AVAILABILITY
 
 This source is in Github:
 
-  http://github.com/dann/
+  http://github.com/dann/p5-plackx-middlewarestack
 
 =head1 AUTHOR
 
